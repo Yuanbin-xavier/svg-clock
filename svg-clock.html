@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>clock</title>
+</head>
+<style>
+  * {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .hour {
+    transform: rotate(0deg);
+    transform-origin: 200px 200px;
+    /* animation:myfirst 432s infinite linear; */
+  }
+
+  .minute {
+    transform: rotate(0deg);
+    transform-origin: 200px 200px;
+    /* animation:myfirst 36s infinite linear; */
+  }
+  .sec {
+    transform: rotate(0deg);
+    transform-origin: 200px 200px;
+    /* animation:myfirst 6s infinite linear; */
+  }
+
+  /* @keyframes myfirst
+  {
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+  } */
+</style>
+
+<body>
+<svg width="999" height="999">
+  <g id='backgroundb'>
+    <circle cx='200' cy='200' r='190' style="fill: rgb(100,200,0); stroke-width:10; stroke:black">
+  </g>
+  <g class='hour' id='hour'>
+    <line x1='200' y1='210' x2='200' y2='90' style='stroke:rgb(100,100,0);stroke-width:15'/>
+    <circle cx='200' cy='220' r='7' style='fill:rgba(0,0,0,0); stroke-width:14; stroke:rgb(100,100,0)'>
+  </g>
+  <g class='minute' id='minute'>
+    <line x1='200' y1='210' x2='200' y2='50' style='stroke:rgb(150,150,0);stroke-width:10'/>
+  </g>
+  <g class='sec' style='opacity:1' id='sec'>
+    <line x1='200' y1='210' x2='200' y2='30' style='stroke:rgb(200,200,0);stroke-width:5'/>
+    <circle cx='200' cy='220' r='10' style='fill:rgba(0,0,0,0); stroke-width:5; stroke:rgb(200,200,0)'>
+  </g>
+  <circle cx='200' cy='200' r='8'>
+  </svg>
+</body>
+</html>
+<script>
+
+  var backgroundb = document.getElementById('backgroundb');
+  for(var i = 0; i <= 12; i++) {
+    var c = i%3?1:2;
+    backgroundb.innerHTML += "<line x1='200' y1='20' x2='200' y2='40' style='stroke:rgb(100,255,100); stroke-width:"+5*c+"; transform:rotate("+30*i+"deg); transform-origin:200px 200px;'/>"
+  }
+
+  var date = new Date();
+  var h = date.getHours();
+  var m = date.getMinutes();
+  var s = date.getSeconds();
+  var sz = s * 6;
+  var mz = m * 6 + s/30;
+  var hz = h * 30 + m/30;
+  var sec = document.getElementById('sec');
+  var minute = document.getElementById('minute');
+  var hour = document.getElementById('hour');
+
+  function circle() {
+    date = new Date();
+    h = date.getHours();
+    m = date.getMinutes();
+    s = date.getSeconds();
+    var sz = s * 6;
+    var mz = m * 6 + s/30;
+    var hz = h * 30 + m/30;
+
+    sec.style.transform = 'rotate('+ sz +'deg)';
+    minute.style.transform = 'rotate('+ mz +'deg)';
+    hour.style.transform = 'rotate('+ hz +'deg)';
+
+    setTimeout(circle,1000);
+  }
+  circle();
+
+  console.log(h + ':' + m + ':' + s);
+</script>
